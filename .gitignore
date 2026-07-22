@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Env
+.env
+.env.local
+
+# Uploads locais (não versionar dados reais)
+/uploads/*
+/evidencias/*
+/laudos/*
+/logs/*
+/backups/*
+!/uploads/.gitkeep
+!/evidencias/.gitkeep
+!/laudos/.gitkeep
+!/logs/.gitkeep
+!/backups/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code (configurações pessoais/locais não versionadas; launch.json é versionado)
+.claude/settings.local.json
+
+# Dados locais do MinIO (dev)
+.minio-data/
