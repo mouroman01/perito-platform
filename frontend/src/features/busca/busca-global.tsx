@@ -44,7 +44,7 @@ export function BuscaGlobal() {
   const mostrarDropdown = aberto && habilitado
 
   return (
-    <div ref={containerRef} className="relative w-80">
+    <div ref={containerRef} className="relative min-w-0 flex-1 sm:w-72 sm:flex-none md:w-80">
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input

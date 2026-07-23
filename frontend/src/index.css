@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+/* Habilita o variant `dark:` acionado pelo atributo data-theme no <html>,
+   para os poucos casos que precisam de ajuste manual além dos tokens. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
@@ -15,7 +19,30 @@
   --color-destructive: #b3261e;
 }
 
+/* Tema escuro: sobrescreve os mesmos tokens. Como todo o app usa as utilidades
+   semânticas (bg-background, text-foreground, bg-card, border-border...), a troca
+   das variáveis inverte a interface inteira sem tocar nos componentes. */
+:root[data-theme="dark"] {
+  --color-primary: #4f83c2;
+  --color-primary-foreground: #ffffff;
+  --color-background: #0f1218;
+  --color-foreground: #e6e8ee;
+  --color-muted: #232833;
+  --color-muted-foreground: #99a2b2;
+  --color-border: #2a303c;
+  --color-card: #171b22;
+  --color-destructive: #e5595a;
+}
+
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
   * {
     border-color: var(--color-border);
   }
