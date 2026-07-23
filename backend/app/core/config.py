@@ -40,10 +40,11 @@ class Settings(BaseSettings):
 
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:5173"]
 
-    # Inteligência Artificial (RF015) — provedor Anthropic (Claude).
-    # A chave NÃO fica versionada; defina ANTHROPIC_API_KEY em backend/.env.
-    ANTHROPIC_API_KEY: str = ""
-    ANTHROPIC_MODEL: str = "claude-opus-4-8"
+    # Inteligência Artificial (RF015) — provedor Google Gemini.
+    # A chave NÃO fica versionada; defina GEMINI_API_KEY em backend/.env.
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-2.5-flash"
+    GEMINI_EMBED_MODEL: str = "gemini-embedding-001"
 
 
 settings = Settings()

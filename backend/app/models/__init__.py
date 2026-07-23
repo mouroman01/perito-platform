@@ -16,6 +16,7 @@ from app.models.modelo import Modelo
 from app.models.laudo import Laudo
 from app.models.log_auditoria import LogAuditoria
 from app.models.historico_alteracao import HistoricoAlteracao
+from app.models.embedding_busca import EmbeddingBusca
 
 __all__ = [
     "Perfil",
@@ -36,4 +37,5 @@ __all__ = [
     "Laudo",
     "LogAuditoria",
     "HistoricoAlteracao",
+    "EmbeddingBusca",
 ]

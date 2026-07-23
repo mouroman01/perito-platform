@@ -33,6 +33,10 @@ os.environ["DATABASE_URL"] = f"{_BASE_URL}?options=-csearch_path%3D{SCHEMA_TESTE
 # que conseguimos limpar entre os testes (evita acoplamento entre testes de login).
 os.environ["REDIS_URL"] = "redis://localhost:6399/0"
 os.environ["SECRET_KEY"] = "chave-de-teste"
+# IA propositalmente sem chave: os testes de degradação (503) e os testes com a
+# chamada ao Gemini mockada não dependem de uma chave real. Forçar vazio aqui
+# mantém a suíte determinística, independentemente do backend/.env do dev.
+os.environ["GEMINI_API_KEY"] = ""
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402

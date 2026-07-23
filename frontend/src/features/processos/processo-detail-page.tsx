@@ -25,6 +25,7 @@ import { TIPOS_COMPROMISSO } from "@/features/agenda/types"
 import { STATUS_LAUDO, type Laudo } from "@/features/laudos/types"
 import { LaudoFormDialog } from "@/features/laudos/laudo-form-dialog"
 import { HistoricoCard } from "@/features/historico/historico-card"
+import { AssistenteIaProcesso } from "@/features/ia/assistente-processo"
 
 const LABEL_STATUS_LAUDO = Object.fromEntries(STATUS_LAUDO.map((s) => [s.valor, s.label]))
 const LABEL_SITUACAO_PROCESSO = Object.fromEntries(SITUACOES_PROCESSO.map((s) => [s.valor, s.label]))
@@ -405,6 +406,8 @@ export function ProcessoDetailPage() {
           </ul>
         </CardContent>
       </Card>
+
+      <AssistenteIaProcesso processoId={processoId} />
 
       <Card>
         <CardHeader>
