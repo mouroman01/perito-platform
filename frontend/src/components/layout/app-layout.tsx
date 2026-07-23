@@ -27,7 +27,7 @@ const itensNavegacao = [
   { to: "/financeiro", label: "Financeiro", icon: Wallet, disponivel: true },
   { to: "/agenda", label: "Agenda", icon: Calendar, disponivel: true },
   { to: "/biblioteca", label: "Biblioteca", icon: BookOpen, disponivel: true },
-  { to: "/ia", label: "Inteligência Artificial", icon: Sparkles, disponivel: false },
+  { to: "/ia", label: "Inteligência Artificial", icon: Sparkles, disponivel: true, permissao: "ia:usar" },
   { to: "/relatorios", label: "Relatórios", icon: BarChart3, disponivel: true },
   { to: "/usuarios", label: "Usuários", icon: Users, disponivel: true },
   {

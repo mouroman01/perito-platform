@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { ArrowLeft, Download } from "lucide-react"
+import { isAxiosError } from "axios"
+import { ArrowLeft, Download, Sparkles } from "lucide-react"
 import { api } from "@/lib/api"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -17,9 +18,12 @@ export function LaudoDetailPage() {
   const { temPermissao } = useAuth()
   const queryClient = useQueryClient()
   const podeEscrever = temPermissao("laudos:write")
+  const podeUsarIa = temPermissao("ia:usar")
 
   const [conteudo, setConteudo] = useState("")
   const [salvo, setSalvo] = useState(false)
+  const [estruturaSugerida, setEstruturaSugerida] = useState<string | null>(null)
+  const [erroIa, setErroIa] = useState<string | null>(null)
 
   const { data: laudo, isLoading } = useQuery({
     queryKey: ["laudos", laudoId],
@@ -46,6 +50,28 @@ export function LaudoDetailPage() {
       queryClient.invalidateQueries({ queryKey: ["historico", "laudos", laudoId] })
     },
   })
+
+  const estruturaMutation = useMutation({
+    mutationFn: async () =>
+      (await api.post<{ estrutura: string }>("/ia/estrutura-laudo", { processo_id: laudo!.processo.id })).data
+        .estrutura,
+    onSuccess: (estrutura) => {
+      setEstruturaSugerida(estrutura)
+      setErroIa(null)
+    },
+    onError: (err) => {
+      setEstruturaSugerida(null)
+      setErroIa(
+        isAxiosError(err) ? (err.response?.data?.detail ?? "Falha ao consultar a IA.") : "Falha ao consultar a IA.",
+      )
+    },
+  })
+
+  function inserirEstrutura() {
+    if (!estruturaSugerida) return
+    setConteudo((atual) => (atual.trim() ? `${atual}\n\n${estruturaSugerida}` : estruturaSugerida))
+    setEstruturaSugerida(null)
+  }
 
   async function baixarPdf() {
     const resposta = await api.get(`/laudos/${laudoId}/exportar-pdf`, { responseType: "blob" })
@@ -126,14 +152,42 @@ export function LaudoDetailPage() {
           className="font-mono text-sm"
         />
         {podeEscrever && (
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Button onClick={() => salvarMutation.mutate()} disabled={salvarMutation.isPending}>
               {salvarMutation.isPending ? "Salvando..." : "Salvar conteúdo"}
             </Button>
             {salvo && <span className="text-sm text-emerald-600">Salvo.</span>}
+            {podeUsarIa && (
+              <Button
+                variant="outline"
+                onClick={() => estruturaMutation.mutate()}
+                disabled={estruturaMutation.isPending}
+              >
+                <Sparkles className="size-4" />
+                {estruturaMutation.isPending ? "Gerando..." : "Sugerir estrutura (IA)"}
+              </Button>
+            )}
           </div>
         )}
+        {erroIa && <p className="text-sm text-destructive">{erroIa}</p>}
       </div>
+
+      {estruturaSugerida && (
+        <div className="rounded-lg border border-border bg-muted/40 p-4">
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-foreground">Estrutura sugerida pela IA</h3>
+            <div className="flex gap-2">
+              <Button size="sm" onClick={inserirEstrutura}>
+                Inserir no conteúdo
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setEstruturaSugerida(null)}>
+                Descartar
+              </Button>
+            </div>
+          </div>
+          <p className="whitespace-pre-wrap text-sm text-foreground">{estruturaSugerida}</p>
+        </div>
+      )}
 
       <HistoricoCard
         entidade="laudos"

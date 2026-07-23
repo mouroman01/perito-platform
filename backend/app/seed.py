@@ -32,6 +32,7 @@ PERFIS_PADRAO = [
             "laudos:read",
             "laudos:write",
             "relatorios:read",
+            "ia:usar",
         ],
     },
     {

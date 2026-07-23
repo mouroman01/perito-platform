@@ -16,6 +16,7 @@ from app.api.v1.endpoints import (
     evidencias,
     financeiro,
     historico,
+    ia,
     laudos,
     magistrados,
     perfis,
@@ -48,3 +49,4 @@ api_router.include_router(auditoria.router)
 api_router.include_router(historico.router)
 api_router.include_router(dashboard.router)
 api_router.include_router(busca.router)
+api_router.include_router(ia.router)

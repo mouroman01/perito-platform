@@ -146,6 +146,9 @@ verifica também a conectividade com o banco de dados.
 - **Busca global (RF014)**: campo único no topo que pesquisa processos,
   clientes, advogados, escritórios, contatos, magistrados, comarcas e laudos,
   respeitando as permissões do usuário
+- **Inteligência Artificial (RF015)**: resumo de documentos e sugestão de
+  estrutura de laudo, via API da Anthropic (Claude). Configure `ANTHROPIC_API_KEY`
+  em `backend/.env`; sem a chave, os recursos respondem com aviso explicativo
 - **Relatórios**: indicadores agregados (gráficos) e exportação CSV
 - **Auditoria**: log de todas as ações de escrita na API, mais histórico de
   alterações campo a campo (situação de processo, status de laudo etc.)
@@ -153,9 +156,12 @@ verifica também a conectividade com o banco de dados.
   15 min) e recuperação de senha por e-mail (com link de uso único)
 - **Armazenamento**: documentos dos processos ficam no MinIO, não em disco local
 
-A **Fase 6** (Inteligência Artificial) fica por último, por depender da
-escolha do provedor de IA. Consulte o **Documento Mestre do Projeto** na raiz
-do repositório para a especificação completa.
+A **Fase 6** (Inteligência Artificial) foi iniciada com o provedor **Anthropic
+(Claude)**: já há resumo de documentos e sugestão de estrutura de laudo. Os
+demais recursos de IA previstos (organização de evidências, pesquisa semântica,
+extração de informações, busca inteligente, checklist automático) ainda serão
+implementados. Consulte o **Documento Mestre do Projeto** na raiz do repositório
+para a especificação completa.
 
 ## Documentação
 

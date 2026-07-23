@@ -23,6 +23,7 @@ import { ModelosPage } from "@/features/biblioteca/modelos-page"
 import { LaudosPage } from "@/features/laudos/laudos-page"
 import { LaudoDetailPage } from "@/features/laudos/laudo-detail-page"
 import { AuditoriaPage } from "@/features/configuracoes/auditoria-page"
+import { IAPage } from "@/features/ia/ia-page"
 import { ProtectedRoute } from "@/routes/protected-route"
 
 const RelatoriosPage = lazy(() =>
@@ -56,6 +57,7 @@ function App() {
           <Route path="/processos/:id" element={<ProcessoDetailPage />} />
           <Route path="/agenda" element={<AgendaPage />} />
           <Route path="/financeiro" element={<FinanceiroPage />} />
+          <Route path="/ia" element={<IAPage />} />
 
           <Route path="/biblioteca" element={<BibliotecaLayout />}>
             <Route index element={<Navigate to="modelos" replace />} />
